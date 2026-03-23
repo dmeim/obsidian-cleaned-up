@@ -2250,7 +2250,15 @@ settings:
 */
 
 /* Move properties to bottom of note */
+/* Edit (source) mode: metadata-container is a direct child of cm-sizer */
 .markdown-source-view.mod-cm6 .cm-sizer{display:flex;flex-direction:column}
 .markdown-source-view.mod-cm6 .cm-sizer>.metadata-container{order:999}
-.markdown-preview-sizer{display:flex;flex-direction:column}
-.markdown-preview-sizer>.metadata-container{order:999}
+/* Reading mode: metadata-container is inside .mod-header alongside .inline-title.
+   We make .mod-header a flex column so we can reorder its children,
+   then give .metadata-container order:999 to push it down.
+   We also set order:999 on .mod-header itself within the sizer
+   so the whole block (title stays at top via order:0) flows to the bottom. */
+.markdown-reading-view .markdown-preview-sizer{display:flex;flex-direction:column}
+.markdown-reading-view .markdown-preview-sizer>.mod-header{display:contents}
+.markdown-reading-view .markdown-preview-sizer .mod-header>.inline-title{order:-1}
+.markdown-reading-view .markdown-preview-sizer .mod-header>.metadata-container{order:999}
